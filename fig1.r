@@ -1,10 +1,4 @@
-
 library(tidyverse)
-library(rstatix)
-library(ggpubr)
-
-#protectgrp <- read.csv("DataFig.csv", stringsAsFactors=FALSE)
-#protectgrp <- pivot_longer(protectgrp, everything())
 
 protectgrp <- read.csv("DataFig1_202104.csv", stringsAsFactors=FALSE)
 
@@ -12,26 +6,10 @@ protectgrp <- protectgrp[which(protectgrp$GAP12_Protected!=""),]
 names(protectgrp) <- c("group", "percentprotected")
 protectgrp[which(protectgrp$group=="Vascular Plants"),"group"] <- "Plants"
 protectgrp[which(protectgrp$group=="Freshwater Intertebrates"),"group"] <- "Freshwater Invertebrates"
-#protectgrp$percentprotected <- as.numeric(gsub("[\\%,]", "", protectgrp$percentprotected))
 protectgrp$percentprotected <- protectgrp$percentprotected*100
-#protectgrp[which(protectgrp$group=="Aquatic.Inverts"),]$group <- "Freshwater Invertebrates"
-
 
 protectgrp <- protectgrp %>% mutate(group=factor(group, levels=c("Plants","Vertebrates","Freshwater Invertebrates","Pollinators" ) ))
 levels(protectgrp$group)
-
-kruskal.test(percentprotected~group, data=protectgrp)
-pairwise.wilcox.test(protectgrp$percentprotected, protectgrp$group, p.adjust.method = "BH")
-
-
-res.kruskal <- protectgrp %>% kruskal_test(percentprotected~group)
-res.kruskal
-protectgrp %>% kruskal_effsize(percentprotected~group)
-
-pwc <- protectgrp %>%  dunn_test(percentprotected~group, p.adjust.method = "bonferroni") 
-pwc
-pwc2 <- protectgrp %>% wilcox_test(percentprotected~group, p.adjust.method = "bonferroni")
-pwc2
 
 # function to get the count
 stat_box_data <- function(x, upper_limit = max(diamonds$price) * 1.15) {

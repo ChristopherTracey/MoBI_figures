@@ -1,8 +1,4 @@
-
 library(tidyverse)
-library(rstatix)
-library(ggplot2)
-library(ggpubr)
 
 options(scipen = 999) # don't use scientific notation
 
@@ -43,24 +39,3 @@ x <- ggplot(data=overlap, aes(x=thresh+0.0000001, y=mn_prp, group=mobi_gp)) +
 
 ggsave("fig5.tiff",  plot=x, width=8, height=6, antialias="default", units="in", dpi=300)
 
-
-
-
-
-####### OLD BELOW  ###############
-
-ggplot(overlap, aes(x=group, y=percentprotected)) + #, fill=group
-  geom_boxplot(fill="#1f78b4") +
-  labs(x="Taxonomic Group", y = "Percent of Suitable Habitat Overlapping Protected Areas", aes(size=10)) + #title="Plot of length  per dose",
-  stat_summary(fun.data=stat_box_data, geom="text", hjust = 0.5, vjust = 0.9, size=4) +
-  annotate("text", x = 1, y = 105, label = "a", size=5) + 
-  annotate("text", x = 2, y = 105, label = "b", size=5) + 
-  annotate("text", x = 3, y = 105, label = "c", size=5) + 
-  annotate("text", x = 4, y = 105, label = "a", size=5) + 
-  theme_classic() +
-  theme(
-    legend.position="none",
-    axis.title=element_text(size=14, face="plain"),
-    aspect.ratio = 0.6:1,
-    axis.text=element_text(size=12)
-  ) 
